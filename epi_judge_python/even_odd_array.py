@@ -6,11 +6,35 @@ from test_framework import generic_test
 from test_framework.test_failure import TestFailure
 from test_framework.test_utils import enable_executor_hook
 
+# # my solution
+# def even_odd(A: List[int]) -> None:
+#     ie = 0
+#     io = len(A) -1
+#     while ie < io :
+#         if A[ie] % 2 == 0 :
+#             ie += 1
+#         elif A[io] % 2 == 1 :
+#             io -= 1
+#         else :
+#             temp = A[ie]
+#             A[ie] = A[io]
+#             A[io] = temp
+#             ie += 1
+#             io -= 1
+#     return A
 
+# Book solution
 def even_odd(A: List[int]) -> None:
-    # TODO - you fill in here.
-    return
-
+    ie = 0
+    io = len(A) - 1
+    while ie < io :
+        if A[ie] % 2 == 0 :
+            ie += 1
+        else :
+            temp = A[ie]
+            A[ie] = A[io]
+            A[io] = temp
+            io -= 1
 
 @enable_executor_hook
 def even_odd_wrapper(executor, A):
