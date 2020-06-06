@@ -22,7 +22,7 @@ def compute_tower_hanoi(num_rings: int) -> List[List[int]]:
             m = len(steps) - m
             steps.append([f,t])
             # could do another recursive call to get top
-            # n-1 elements back on the 
+            # n-1 elements back on the
             steps.extend([
                 [(steps[i][0]+o-f) % 3,(steps[i][1]+o-f) % 3] for i in range(-m-1,-1)
             ])
