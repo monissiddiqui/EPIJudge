@@ -2,8 +2,12 @@ from test_framework import generic_test
 
 
 def change_making(cents: int) -> int:
-    # TODO - you fill in here.
-    return 0
+    coins = [100, 50,25, 10, 5, 1]
+    count = 0
+    for coin in coins :
+        count += cents //  coin
+        cents %= coin
+    return count
 
 
 if __name__ == '__main__':

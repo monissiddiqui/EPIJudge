@@ -2326,7 +2326,7 @@ problem_mapping = {
                 "total": 49999
             },
             "Python: making_change.py": {
-                "passed": 0,
+                "passed": 49999,
                 "total": 49999
             }
         },
@@ -2394,7 +2394,7 @@ problem_mapping = {
                 "total": 1008
             },
             "Python: three_sum.py": {
-                "passed": 0,
+                "passed": 1008,
                 "total": 1008
             }
         },
