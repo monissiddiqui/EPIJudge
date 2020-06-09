@@ -7,15 +7,41 @@ from test_framework import generic_test
 from test_framework.test_failure import TestFailure
 from test_framework.test_utils import enable_executor_hook
 
+from collections import deque
+
 WHITE, BLACK = range(2)
 
 Coordinate = collections.namedtuple('Coordinate', ('x', 'y'))
 
-
+'''
+Use DFS to iterate through maze and find the exit, marking visited nodes as 
+we go along. Visited nodes can be marked in place for the most optimal 
+space complexity. 
+'''
 def search_maze(maze: List[List[int]], s: Coordinate,
                 e: Coordinate) -> List[Coordinate]:
-    # TODO - you fill in here.
-    return []
+    exitPath = deque()
+    N = len(maze[0])
+    M = len(maze)
+    def neighboursOf(node: Coordinate) :
+        if node.x +1 < M and maze[node.x+1][node.y] == WHITE: yield Coordinate(node.x+1,node.y)
+        if node.y -1 >= 0 and maze[node.x][node.y-1] == WHITE: yield Coordinate(node.x,node.y-1)
+        if node.x -1 >= 0 and maze[node.x-1][node.y] == WHITE: yield Coordinate(node.x-1,node.y)
+        if node.y+1 < N and maze[node.x][node.y+1] == WHITE: yield Coordinate(node.x,node.y+1)
+
+    def isOnExitPath(node : Coordinate) -> bool :
+        maze[node.x][node.y] = BLACK # simulate marking as visited
+        if node == e :
+            exitPath.appendleft(node)
+            return True
+        for neighbour in neighboursOf(node) :
+            if isOnExitPath(neighbour) :
+                exitPath.appendleft(node)
+                return True
+        return False
+
+    isOnExitPath(s)
+    return list(exitPath)
 
 
 def path_element_is_feasible(maze, prev, cur):
