@@ -36,27 +36,45 @@ RED, WHITE, BLUE = range(3)
 #     return
 
 # Solution 2 by doing one pivot and passing over values that are ==
+# def dutch_flag_partition(pivot_index: int, A: List[int]) -> None:
+#     pivot = A[pivot_index]
+#     # first partition by < and >= pivot
+#     il = 0
+#     curr = 0
+#     ig = len(A) -1
+#     while curr <= ig:
+#         if A[curr] < pivot:
+#             temp = A[il]
+#             A[il] = A[curr]
+#             A[curr] = temp
+#             il += 1
+#             curr += 1
+#         elif A[curr] > pivot:
+#             temp = A[curr]
+#             A[curr] = A[ig]
+#             A[ig] = temp
+#             ig -= 1
+#         else :
+#             curr += 1
+#     return
+
+# REDO
 def dutch_flag_partition(pivot_index: int, A: List[int]) -> None:
     pivot = A[pivot_index]
-    # first partition by < and >= pivot
-    il = 0
+    ltNext = 0
+    gtNext = len(A) -1
     curr = 0
-    ig = len(A) -1
-    while curr <= ig:
-        if A[curr] < pivot:
-            temp = A[il]
-            A[il] = A[curr]
-            A[curr] = temp
-            il += 1
+    while curr <= gtNext :
+        if A[curr] < pivot :
+            if curr != ltNext :
+                A[curr],A[ltNext] = A[ltNext], A[curr]
+            ltNext += 1
             curr += 1
-        elif A[curr] > pivot:
-            temp = A[curr]
-            A[curr] = A[ig]
-            A[ig] = temp
-            ig -= 1
+        elif A[curr] > pivot :
+            A[curr], A[gtNext] = A[gtNext], A[curr]
+            gtNext -= 1
         else :
-            curr += 1
-    return
+            curr +=1
 
 @enable_executor_hook
 def dutch_flag_partition_wrapper(executor, A, pivot_idx):

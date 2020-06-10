@@ -23,18 +23,27 @@ from test_framework.test_utils import enable_executor_hook
 #             io -= 1
 #     return A
 
-# Book solution
+# # Book solution
+# def even_odd(A: List[int]) -> None:
+#     ie = 0
+#     io = len(A) - 1
+#     while ie < io :
+#         if A[ie] % 2 == 0 :
+#             ie += 1
+#         else :
+#             temp = A[ie]
+#             A[ie] = A[io]
+#             A[io] = temp
+#             io -= 1
+
+# redo problem
 def even_odd(A: List[int]) -> None:
-    ie = 0
-    io = len(A) - 1
-    while ie < io :
-        if A[ie] % 2 == 0 :
-            ie += 1
-        else :
-            temp = A[ie]
-            A[ie] = A[io]
-            A[io] = temp
-            io -= 1
+    end = 0
+    for i,a in enumerate(A) :
+        if a % 2 == 0 :
+            A[i], A[end] = A[end],A[i]
+            end +=1
+
 
 @enable_executor_hook
 def even_odd_wrapper(executor, A):

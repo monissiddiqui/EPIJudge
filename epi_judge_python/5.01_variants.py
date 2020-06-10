@@ -21,7 +21,7 @@ O(1) additional space and O(n) time.
 def partition_by_categories() :
     '''
     use the same underlying algorithm as the dutch national flag problem, but associate the keys to
-    integer values via a map
+    integer values via a map or just compare the keys specifically at each step in if statements.
     '''
     return
 
@@ -30,6 +30,7 @@ def partition_four_keys() :
     This is also the same idea as my Solution 1 for the dutch national flag problem. Keep partitionaing by
     one value on the left subarray, and when the rest of the values are put into the right sub-array,
     perform the partitioning again on the right sub array. We can do this for an arbitrary number of keys
+    in O(k*n) time where k is the number of keys.
     '''
 
 def partition_by_boolean() :
@@ -42,8 +43,9 @@ def partition_by_boolean() :
 
 def partition_by_boolean_preserve_ordering() :
     '''
-    Have two incrementers, but instead of starting from the beginning, iterate from the end. This way when
-    appending to the end of the array with the True-value keys, the order gets preserved.
+    Instead of starting from the beginning, iterate from the end of the array. This way when
+    inserting from the end of the array with the True-value keys, the order gets preserved since we are
+    inserting the true valued keys that appear later after wards. 
     :return:
     '''
 
