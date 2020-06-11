@@ -45,7 +45,7 @@ def partition_by_boolean_preserve_ordering() :
     '''
     Instead of starting from the beginning, iterate from the end of the array. This way when
     inserting from the end of the array with the True-value keys, the order gets preserved since we are
-    inserting the true valued keys that appear later after wards. 
+    inserting the true valued keys that appear later after wards.
     :return:
     '''
 

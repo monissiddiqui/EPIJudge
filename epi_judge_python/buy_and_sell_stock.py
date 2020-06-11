@@ -94,13 +94,34 @@ from test_framework import generic_test
 SOLUTION 3, found in the book. This is a better way than doing the second solution above, as it solves in one pass
 and uses O(1) space. It doesn't need to store the mininum seen up to values array.
 """
+# def buy_and_sell_stock_once(prices: List[float]) -> float:
+#     minSoFar = prices[0]
+#     maxProfit = 0
+#     for p in prices:
+#         maxProfit = max(p - minSoFar,maxProfit)
+#         minSoFar = min(p,minSoFar)
+#     return maxProfit
+
+# Redo problem
 def buy_and_sell_stock_once(prices: List[float]) -> float:
-    minSoFar = prices[0]
+    minSoFar = float("inf")
     maxProfit = 0
-    for p in prices:
-        maxProfit = max(p - minSoFar,maxProfit)
-        minSoFar = min(p,minSoFar)
+    for p in prices :
+        maxProfit = max(maxProfit,p - minSoFar)
+        minSoFar = min(minSoFar,p)
     return maxProfit
+
+# This is the way I solved the problem in leetcode. It is slightly more complicated but still
+# optimal. Basically keep extending the window to sell
+def buy_and_sell_stock_once_differential_method(prices: List[float]) -> float:
+    currProfit = 0
+    maxProfit = 0
+    for i in range(1,len(prices)) :
+        diff = prices[i] - prices[i-1]
+        currProfit = max(currProfit + prices[i] - prices[i-1],0)
+        maxProfit = max(currProfit,maxProfit)
+    return maxProfit
+
 
 
 if __name__ == '__main__':
@@ -108,4 +129,4 @@ if __name__ == '__main__':
     exit(
         generic_test.generic_test_main('buy_and_sell_stock.py',
                                        'buy_and_sell_stock.tsv',
-                                       buy_and_sell_stock_once))
+                                       buy_and_sell_stock_once_differential_method))
