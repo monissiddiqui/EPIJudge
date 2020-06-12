@@ -6,28 +6,47 @@ from test_framework import generic_test
 """
 Solution 1 merging the list piece by piece. 
 """
+# def merge_two_sorted_lists(L1: Optional[ListNode],
+#                            L2: Optional[ListNode]) -> Optional[ListNode]:
+#     head = ListNode()
+#     curr = head
+#     while L1 and L2 :
+#
+#         if L1.data < L2.data :
+#             curr.next = L1
+#             curr = L1
+#             L1 = L1.next
+#         else :
+#             curr.next = L2
+#             curr = L2
+#             L2 = L2.next
+#
+#     if L1 :
+#        curr.next = L1
+#     elif L2:
+#        curr.next = L2
+#
+#     return head.next
+
+
+# redo problem
 def merge_two_sorted_lists(L1: Optional[ListNode],
                            L2: Optional[ListNode]) -> Optional[ListNode]:
-    head = ListNode()
-    curr = head
+    dummyHead = ListNode()
+    ptr = dummyHead
     while L1 and L2 :
-
-        if L1.data < L2.data :
-            curr.next = L1
-            curr = L1
+        if L1.data <= L2.data :
+            ptr.next = L1
             L1 = L1.next
         else :
-            curr.next = L2
-            curr = L2
+            ptr.next = L2
             L2 = L2.next
-
+        ptr = ptr.next
     if L1 :
-       curr.next = L1
-    elif L2:
-       curr.next = L2
-
-    return head.next
-
+        ptr.next = L1
+    elif L2 :
+        ptr.next = L2
+    return dummyHead.next
 
 if __name__ == '__main__':
     exit(
