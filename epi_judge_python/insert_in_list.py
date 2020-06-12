@@ -5,7 +5,12 @@ from test_framework import generic_test
 from test_framework.test_utils import enable_executor_hook
 
 
-# Insert new_node after node.
+# # Insert new_node after node.
+# def insert_after(node: ListNode, new_node: ListNode) -> None:
+#     new_node.next = node.next
+#     node.next = new_node
+
+# redo problem
 def insert_after(node: ListNode, new_node: ListNode) -> None:
     new_node.next = node.next
     node.next = new_node
