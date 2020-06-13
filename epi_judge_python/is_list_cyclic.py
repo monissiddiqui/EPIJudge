@@ -8,7 +8,50 @@ from test_framework.test_utils import enable_executor_hook
 
 
 def has_cycle(head: ListNode) -> Optional[ListNode]:
-    # TODO - you fill in here.
+
+    def iterate_k_nodes(node: ListNode, k: int) -> ListNode :
+        for _ in range(k):
+            node = node.next
+        return node
+
+
+    dummyHead = ListNode(0,head)
+    # find a node in the cylce
+    slow,fast = dummyHead, head
+    while fast and fast.next and slow.data != fast.data:
+        fast = fast.next.next
+        slow = slow.next
+
+    if not fast or slow.data != fast.data:
+        return None
+
+    # find the cycle length
+    ptr = slow.next
+    cycleLen = 1
+    while ptr.data != slow.data :
+        cycleLen += 1
+        ptr = ptr.next
+
+    #iterate from head k at a time to reach a point in the cycle
+    prevNode = head
+    nextNode = iterate_k_nodes(prevNode,cycleLen)
+    if prevNode.data == nextNode.data :
+        return prevNode
+    while True :
+        nextNextNode = iterate_k_nodes(nextNode,cycleLen)
+        if nextNextNode.data == nextNode.data :
+            break
+        prevNode = nextNode
+        nextNode = nextNextNode
+
+    # Let n be index of beginning of cycle. prevNode and nextNode
+    # should both be preciseley n % cycleLen nodes behind the start
+    # of the cycle
+    for _ in range(cycleLen) :
+        prevNode = prevNode.next
+        nextNode = nextNode.next
+        if prevNode.data == nextNode.data :
+            return prevNode
     return None
 
 
