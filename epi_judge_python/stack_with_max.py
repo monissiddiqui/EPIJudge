@@ -3,33 +3,53 @@ from test_framework.test_failure import TestFailure
 
 from collections import namedtuple
 from typing import List
+from typing import Tuple
 
 
+# class Stack:
+#     ElementWithMax = namedtuple("ElementWithMax", ["element", "max"])
+#
+#     def __init__(self):
+#         self.stack: List[Stack.ElementWithMax] = []
+#
+#     def empty(self) -> bool:
+#         return len(self.stack) == 0
+#
+#     def max(self) -> int:
+#         # if self.empty():
+#         #     raise IndexError('max(): empty stack')
+#         return self.stack[-1].max #if not self.empty() else
+#
+#     def pop(self) -> int:
+#         # if self.empty():
+#         #     raise IndexError('pop(): empty stack')
+#         return self.stack.pop().element
+#
+#     def push(self, x: int) -> None:
+#         self.stack.append(self.ElementWithMax(
+#             x, x if self.empty() else max(
+#                 x, self.max()
+#             )))
+#         return
+
+# redo problem
 class Stack:
-    ElementWithMax = namedtuple("ElementWithMax", ["element", "max"])
 
     def __init__(self):
-        self.stack: List[Stack.ElementWithMax] = []
+        self.stack = []
 
     def empty(self) -> bool:
         return len(self.stack) == 0
 
     def max(self) -> int:
-        # if self.empty():
-        #     raise IndexError('max(): empty stack')
-        return self.stack[-1].max #if not self.empty() else
+        return self.stack[-1][1]
 
     def pop(self) -> int:
-        # if self.empty():
-        #     raise IndexError('pop(): empty stack')
-        return self.stack.pop().element
+        elem = self.stack.pop()
+        return elem[0]
 
     def push(self, x: int) -> None:
-        self.stack.append(self.ElementWithMax(
-            x, x if self.empty() else max(
-                x, self.max()
-            )))
-        return
+        self.stack.append((x, x if self.empty() else max(x,self.max())))
 
 
 def stack_tester(ops):
