@@ -5,6 +5,7 @@ from typing import Iterator, List
 from test_framework import generic_test
 from test_framework.test_utils import enable_executor_hook
 
+import heapq
 
 class Star:
     def __init__(self, x: float, y: float, z: float) -> None:
@@ -28,8 +29,16 @@ class Star:
 
 
 def find_closest_k_stars(stars: Iterator[Star], k: int) -> List[Star]:
-    # TODO - you fill in here.
-    return []
+    maxHeap = []
+    for star in stars :
+        if len(maxHeap) < k :
+            heapq.heappush(maxHeap,(-star.distance,star))
+        elif maxHeap[0][0] < -star.distance :
+            heapq.heapreplace(maxHeap,(-star.distance,star))
+    return [s[1] for s in maxHeap]
+
+def find_closest_k_stars_pythonic(stars: Iterator[Star], k: int) -> List[Star]:
+    return heapq.nsmallest(k,stars,key=lambda s: s.distance)
 
 
 def comp(expected_output, output):
@@ -43,7 +52,7 @@ def comp(expected_output, output):
 @enable_executor_hook
 def find_closest_k_stars_wrapper(executor, stars, k):
     stars = [Star(*a) for a in stars]
-    return executor.run(functools.partial(find_closest_k_stars, iter(stars),
+    return executor.run(functools.partial(find_closest_k_stars_pythonic, iter(stars),
                                           k))
 
 
