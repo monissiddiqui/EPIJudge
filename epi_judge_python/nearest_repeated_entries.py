@@ -4,8 +4,14 @@ from test_framework import generic_test
 
 
 def find_nearest_repetition(paragraph: List[str]) -> int:
-    # TODO - you fill in here.
-    return 0
+    minDistance = float("inf")
+    mostRecentLocation = {}
+    for i,word in enumerate(paragraph) :
+        if word in mostRecentLocation :
+            minDistance = min(i-mostRecentLocation[word], minDistance)
+        mostRecentLocation[word] = i
+
+    return minDistance if minDistance < float("inf") else -1
 
 
 if __name__ == '__main__':
