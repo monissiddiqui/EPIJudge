@@ -43,4 +43,4 @@ def kth_largest_with_duplictes() :
     '''
 
 # Variant 3
-def 
+def

@@ -2,10 +2,13 @@ from typing import List
 
 from test_framework import generic_test, test_utils
 
+from collections import defaultdict
 
 def find_anagrams(dictionary: List[str]) -> List[List[str]]:
-    # TODO - you fill in here.
-    return []
+    anagramGroups = defaultdict(lambda : [])
+    for word in dictionary :
+        anagramGroups[''.join(sorted(word))].append(word)
+    return [group for group in anagramGroups.values() if len(group) > 1]
 
 
 if __name__ == '__main__':
