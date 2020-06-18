@@ -5,7 +5,18 @@ from test_framework import generic_test
 
 def merge_two_sorted_arrays(A: List[int], m: int, B: List[int],
                             n: int) -> None:
-    # TODO - you fill in here.
+    i,j,k = m-1,n-1, m+n-1
+    while i >=0 and j  >= 0  :
+        if A[i] <= B[j] :
+            A[k] = B[j]
+            j-=1
+        else :
+            A[k] = A[i]
+            i -=1
+        k -=1
+    if j >= 0 :
+        A[:j+1] = B[:j+1]
+
     return
 
 
