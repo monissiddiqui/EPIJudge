@@ -9,27 +9,44 @@ from test_framework.test_utils import enable_executor_hook
 NUM_PEGS = 3
 
 
-def compute_tower_hanoi(num_rings: int) -> List[List[int]]:
-    steps = deque()
-    MASK = 1 ^ 2
-    def move_n_rings_from_to(n, f,t : int) :
-        o = MASK ^ f ^ t
-        if n == 1 :
-            steps.append([f,t])
-        else:
-            m = len(steps)
-            move_n_rings_from_to(n-1,f,o)
-            m = len(steps) - m
-            steps.append([f,t])
-            # could do another recursive call to get top
-            # n-1 elements back on the
-            steps.extend([
-                [(steps[i][0]+o-f) % 3,(steps[i][1]+o-f) % 3] for i in range(-m-1,-1)
-            ])
-            # move_n_rings_from_to(n-1,o,t)
-    move_n_rings_from_to(num_rings,0,1)
-    return steps
+# def compute_tower_hanoi(num_rings: int) -> List[List[int]]:
+#     steps = deque()
+#     MASK = 1 ^ 2
+#     def move_n_rings_from_to(n, f,t : int) :
+#         o = MASK ^ f ^ t
+#         if n == 1 :
+#             steps.append([f,t])
+#         else:
+#             m = len(steps)
+#             move_n_rings_from_to(n-1,f,o)
+#             m = len(steps) - m
+#             steps.append([f,t])
+#             # could do another recursive call to get top
+#             # n-1 elements back on the
+#             steps.extend([
+#                 [(steps[i][0]+o-f) % 3,(steps[i][1]+o-f) % 3] for i in range(-m-1,-1)
+#             ])
+#             # move_n_rings_from_to(n-1,o,t)
+#     move_n_rings_from_to(num_rings,0,1)
+#     return steps
 
+# redo problem
+def compute_tower_hanoi(num_rings: int) -> List[List[int]]:
+    res = deque(maxlen=2**num_rings-1)
+    MASK = 1 ^ 2
+    def move_from_to(n, f, t: int) :
+        if n == 0 : return
+        o = MASK ^ f ^ t
+        m = len(res)
+        move_from_to(n-1,f,o)
+        m = len(res) - m
+        res.append([f,t])
+        # move_from_to(n-1,o,t)
+        res.extend([
+            [(res[i][0]+o-f)%3, (res[i][1]+o-f)%3] for i in range(-m-1,-1)
+        ])
+    move_from_to(num_rings,0,1)
+    return list(res)
 
 @enable_executor_hook
 def compute_tower_hanoi_wrapper(executor, num_rings):
