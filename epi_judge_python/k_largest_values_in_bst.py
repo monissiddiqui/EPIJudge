@@ -3,10 +3,20 @@ from typing import List
 from bst_node import BstNode
 from test_framework import generic_test, test_utils
 
+from collections import deque
 
 def find_k_largest_in_bst(tree: BstNode, k: int) -> List[int]:
-    # TODO - you fill in here.
-    return []
+    kLargest = deque([],maxlen=k)
+    def reverse_in_order(node: BstNode) :
+        if not node: return
+        reverse_in_order(node.right)
+        if len(kLargest) < k :
+            kLargest.append(node.data)
+        if len(kLargest) < k :
+            reverse_in_order(node.left)
+        return
+    reverse_in_order(tree)
+    return list(kLargest)
 
 
 if __name__ == '__main__':
