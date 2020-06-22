@@ -4,9 +4,15 @@ from test_framework import generic_test
 
 
 def majority_search(stream: Iterator[str]) -> str:
-    # TODO - you fill in here.
-    return ''
-
+    char,count = "",0
+    for c in stream:
+        if count == 0 :
+            char = c
+        if c != char :
+            count -=1
+        else:
+            count += 1
+    return char
 
 def majority_search_wrapper(stream):
     return majority_search(iter(stream))
