@@ -11,8 +11,17 @@ MPG = 20
 # gallons[i] is the amount of gas in city i, and distances[i] is the
 # distance city i to the next city.
 def find_ample_city(gallons: List[int], distances: List[int]) -> int:
-    # TODO - you fill in here.
-    return 0
+    minFC = float("inf")
+    minCity = 0
+    MPG = 20 # miles per gallons
+    netFC = 0
+    for i in range(len(gallons)) :
+        netFC += MPG*gallons[i] - distances[i]
+        if netFC < minFC :
+            minFC = netFC
+            minCity = i+1
+
+    return minCity % len(gallons)
 
 
 @enable_executor_hook
