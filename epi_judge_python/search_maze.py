@@ -18,26 +18,46 @@ Use DFS to iterate through maze and find the exit, marking visited nodes as
 we go along. Visited nodes can be marked in place for the most optimal 
 space complexity. 
 '''
+# def search_maze(maze: List[List[int]], s: Coordinate,
+#                 e: Coordinate) -> List[Coordinate]:
+#     exitPath = deque()
+#     N = len(maze[0])
+#     M = len(maze)
+#     def neighboursOf(node: Coordinate) :
+#         if node.x +1 < M and maze[node.x+1][node.y] == WHITE: yield Coordinate(node.x+1,node.y)
+#         if node.y -1 >= 0 and maze[node.x][node.y-1] == WHITE: yield Coordinate(node.x,node.y-1)
+#         if node.x -1 >= 0 and maze[node.x-1][node.y] == WHITE: yield Coordinate(node.x-1,node.y)
+#         if node.y+1 < N and maze[node.x][node.y+1] == WHITE: yield Coordinate(node.x,node.y+1)
+#
+#     def isOnExitPath(node : Coordinate) -> bool :
+#         maze[node.x][node.y] = BLACK # simulate marking as visited
+#         if node == e :
+#             exitPath.appendleft(node)
+#             return True
+#         for neighbour in neighboursOf(node) :
+#             if isOnExitPath(neighbour) :
+#                 exitPath.appendleft(node)
+#                 return True
+#         return False
+#
+#     isOnExitPath(s)
+#     return list(exitPath)
+
 def search_maze(maze: List[List[int]], s: Coordinate,
                 e: Coordinate) -> List[Coordinate]:
     exitPath = deque()
-    N = len(maze[0])
-    M = len(maze)
-    def neighboursOf(node: Coordinate) :
-        if node.x +1 < M and maze[node.x+1][node.y] == WHITE: yield Coordinate(node.x+1,node.y)
-        if node.y -1 >= 0 and maze[node.x][node.y-1] == WHITE: yield Coordinate(node.x,node.y-1)
-        if node.x -1 >= 0 and maze[node.x-1][node.y] == WHITE: yield Coordinate(node.x-1,node.y)
-        if node.y+1 < N and maze[node.x][node.y+1] == WHITE: yield Coordinate(node.x,node.y+1)
-
-    def isOnExitPath(node : Coordinate) -> bool :
-        maze[node.x][node.y] = BLACK # simulate marking as visited
+    neighbours = ( (0,-1),(0,1),(1,0),(-1,0) )
+    def isOnExitPath(node: Coordinate) -> bool:
+        if not (0<=node.x<len(maze) and 0<=node.y<len(maze[0]) and maze[node.x][node.y] == WHITE) :
+            return False
+        exitPath.append(node)
+        maze[node.x][node.y] = BLACK
         if node == e :
-            exitPath.appendleft(node)
             return True
-        for neighbour in neighboursOf(node) :
-            if isOnExitPath(neighbour) :
-                exitPath.appendleft(node)
+        for i,j in neighbours:
+            if isOnExitPath(Coordinate(node.x+i,node.y+j)) :
                 return True
+        exitPath.pop()
         return False
 
     isOnExitPath(s)
