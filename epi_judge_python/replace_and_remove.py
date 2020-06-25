@@ -20,33 +20,61 @@ Whenever an a is encountered, the end is filled with two d's
 whenever a b is encountered, the original array index is decremented
 whenever any other element is encountered, it is inserted into the end
 '''
+# def replace_and_remove(size: int, s: List[str]) -> int:
+#     # shift all characters to the left after deletions accounted
+#     newSize = size
+#     i = 0
+#     for j in range(size):
+#         if s[j] == 'a':
+#             newSize += 1
+#             s[i] = s[j]
+#             i += 1
+#         elif s[j] == 'b':
+#             newSize -= 1
+#         else :
+#             s[i] = s[j]
+#             i += 1
+#     # shift all characters to the end to account for replacements and new size.
+#     size = i
+#     i,j = size-1, newSize -1
+#     while i >= 0 :
+#         if s[i] == "a" :
+#             s[j-1:j+1] = ["d"] *2
+#             j -=2
+#             i -=1
+#         else:
+#             s[j] = s[i]
+#             i -=1
+#             j -=1
+#     return newSize
+
+# redo 6.4
 def replace_and_remove(size: int, s: List[str]) -> int:
-    # shift all characters to the left after deletions accounted
-    newSize = size
-    i = 0
-    for j in range(size):
-        if s[j] == 'a':
-            newSize += 1
+    aCount = 0
+    i=0
+    j = 0
+    while j < size :
+
+        if s[j] == 'a' :
+            aCount += 1
+        if s[j] != 'b' :
             s[i] = s[j]
             i += 1
-        elif s[j] == 'b':
-            newSize -= 1
-        else :
-            s[i] = s[j]
-            i += 1
-    # shift all characters to the end to account for replacements and new size.
-    size = i
-    i,j = size-1, newSize -1
-    while i >= 0 :
-        if s[i] == "a" :
-            s[j-1:j+1] = ["d"] *2
-            j -=2
-            i -=1
-        else:
-            s[j] = s[i]
-            i -=1
+        j += 1
+    newSize = i + aCount
+    j = newSize -1
+    i = i-1
+    while i < j :
+        if s[i] == 'a' :
+            s[j] = 'd'
+            s[j-1] = 'd'
             j -=1
+        else :
+            s[j] = s[i]
+        i -= 1
+        j -= 1
     return newSize
+
 
 
 @enable_executor_hook
