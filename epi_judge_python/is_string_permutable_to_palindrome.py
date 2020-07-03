@@ -1,8 +1,15 @@
 from test_framework import generic_test
 
+from collections import Counter
 
 def can_form_palindrome(s: str) -> bool:
-    # TODO - you fill in here.
+    charCounts = Counter(s)
+    oddCountFound = False
+    for count in charCounts.values() :
+        if count % 2 == 1 :
+            if oddCountFound :
+                return False
+            oddCountFound = True
     return True
 
 
