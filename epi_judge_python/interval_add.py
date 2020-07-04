@@ -8,11 +8,25 @@ from test_framework.test_utils import enable_executor_hook
 
 Interval = collections.namedtuple('Interval', ('left', 'right'))
 
+from typing import Optional
+from collections import deque
 
 def add_interval(disjoint_intervals: List[Interval],
                  new_interval: Interval) -> List[Interval]:
-    # TODO - you fill in here.
-    return []
+    continuedInterval: Optional[Interval] = None
+    result : List[Interval] = deque()
+    i = 0
+    while i< len(disjoint_intervals) and disjoint_intervals[i].right  < new_interval.left:
+        result.append(disjoint_intervals[i])
+        i += 1
+
+    while i < len(disjoint_intervals) and \
+            ( disjoint_intervals[i].left <= new_interval.right <= disjoint_intervals[i].right or
+             new_interval.left <= disjoint_intervals[i].right <= new_interval.right) :
+        new_interval = Interval(min(disjoint_intervals[i].left,new_interval.left),
+                                max(disjoint_intervals[i].right,new_interval.right))
+        i += 1
+    return list(result) +[new_interval] + disjoint_intervals[i:]
 
 
 @enable_executor_hook
