@@ -7,12 +7,31 @@ Rect = collections.namedtuple('Rect', ('x', 'y', 'width', 'height'))
 
 
 def intersect_rectangle(r1: Rect, r2: Rect) -> Rect:
-    # TODO - you fill in here.
-    return Rect(0, 0, 0, 0)
+    widthIntersect = r1.x <= r2.x <= r1.x + r1.width or r2.x <= r1.x <= r2.x + r2.width
+    heightIntersect = r1.y <= r2.y <= r1.y + r1.height or r2.y <= r1.y <= r2.y + r2.height
+    if  heightIntersect and widthIntersect :
+        l = max(r1.x,r2.x)
+        r = min(r1.x+r1.width,r2.x+r2.width)
+        b = max(r1.y,r2.y)
+        t = min(r1.y + r1.height,r2.y + r2.height)
+        if r>l or t > b :
+            return Rect(l,b,r-l,t-b)
+
+    return Rect(0,0,-1,-1)
+
+def intersect_rectangle_simple(r1: Rect, r2: Rect) -> Rect:
+    l = max(r1.x,r2.x)
+    r = min(r1.x+r1.width,r2.x+r2.width)
+    b = max(r1.y,r2.y)
+    t = min(r1.y + r1.height,r2.y + r2.height)
+    if l <= r and b <= t :
+        return Rect(l,b,r-l,t-b)
+    else :
+        return Rect(0,0,-1,-1)
 
 
 def intersect_rectangle_wrapper(r1, r2):
-    return intersect_rectangle(Rect(*r1), Rect(*r2))
+    return intersect_rectangle_simple(Rect(*r1), Rect(*r2))
 
 
 def res_printer(prop, value):
