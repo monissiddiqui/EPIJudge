@@ -14,6 +14,19 @@ def majority_search(stream: Iterator[str]) -> str:
             count += 1
     return char
 
+def majority_search_redo(stream: Iterator[str]) -> str:
+    counter = 0
+    majorityElement = None
+    for s in stream :
+        if not counter :
+            majorityElement = s
+            counter += 1
+        elif s == majorityElement :
+            counter += 1
+        else :
+            counter -= 1
+    return majorityElement
+
 def majority_search_wrapper(stream):
     return majority_search(iter(stream))
 
