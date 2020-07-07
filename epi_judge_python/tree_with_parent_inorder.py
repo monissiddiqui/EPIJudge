@@ -29,6 +29,26 @@ def inorder_traversal(tree: BinaryTreeNode) -> List[int]:
 
     return list(res)
 
+def inorder_traversal_redo(tree: BinaryTreeNode) -> List[int]:
+    if not tree : return []
+    first = tree
+    while first.left :
+        first = first.left
+
+    inOrderList = deque()
+    node = first
+    while node :
+        inOrderList.append(node.data)
+        if node.right :
+            node = node.right
+            while node.left :
+                node = node.left
+        else :
+            while node.parent and node.parent.right is node :
+                node = node.parent
+            node = node.parent
+    return list(inOrderList)
+
 
 if __name__ == '__main__':
     exit(
