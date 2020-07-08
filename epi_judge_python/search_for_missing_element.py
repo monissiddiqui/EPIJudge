@@ -9,7 +9,14 @@ DuplicateAndMissing = collections.namedtuple('DuplicateAndMissing',
 
 
 def find_duplicate_missing(A: List[int]) -> DuplicateAndMissing:
-    # TODO - you fill in here.
+    for i in range(len(A)) :
+        while A[i] != A[A[i]] :
+            # print(i,A[i],A)
+            a = A[i]
+            A[i], A[a] = A[a], A[i]
+    for i in range(len(A)) :
+        if A[i] != i :
+            return DuplicateAndMissing(A[i],i)
     return DuplicateAndMissing(0, 0)
 
 
