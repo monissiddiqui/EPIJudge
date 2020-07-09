@@ -1506,7 +1506,7 @@ problem_mapping = {
                 "total": 948
             },
             "Python: lowest_common_ancestor_close_ancestor.py": {
-                "passed": 0,
+                "passed": 948,
                 "total": 948
             }
         },
@@ -1534,7 +1534,7 @@ problem_mapping = {
                 "total": 904
             },
             "Python: smallest_subarray_covering_set.py": {
-                "passed": 0,
+                "passed": 904,
                 "total": 904
             }
         },
