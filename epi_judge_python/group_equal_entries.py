@@ -8,10 +8,54 @@ from test_framework.test_utils import enable_executor_hook
 
 Person = collections.namedtuple('Person', ('age', 'name'))
 
+from collections import Counter
+
+def group_by_age_no_space(people: List[Person]) -> None:
+    i,j = 0,0
+    while i < len(people) :
+        pivot = people[i].age
+        i += 1
+        j=i
+        while j < len(people) :
+            if people[j].age == pivot :
+                people[i], people[j] = people[j], people[i]
+                i += 1
+            j += 1
+    return
+
+def group_by_age_buckets(people: List[Person]) -> None:
+    ageCounts = Counter([person.age for person in people])
+    ageBucket = {}
+    offset = 0
+    for age in ageCounts :
+        ageBucket[age] = offset
+        offset += ageCounts[age]
+
+    for person in people[:] :
+        age = person.age
+        people[ageBucket[age]] = person
+        ageBucket[age] += 1
+        # if ageBucket[age]['index'] == ageBucket[age]['end'] :
+    return people
 
 def group_by_age(people: List[Person]) -> None:
-    # TODO - you fill in here.
-    return
+    ageCounts = Counter([person.age for person in people])
+    ageBucket, index =  {}, 0
+    for age in ageCounts :
+        ageBucket[age] = index
+        index += ageCounts[age]
+
+    while ageBucket :
+        from_age = next(iter(ageBucket))
+        from_idx = ageBucket[from_age]
+        to_age = people[from_idx].age
+        to_idx = ageBucket[to_age]
+        people[from_idx], people[to_idx] = people[to_idx], people[from_idx]
+        ageCounts[to_age] -= 1
+        ageBucket[to_age] += 1
+        if ageCounts[to_age] == 0 :
+            del ageBucket[to_age]
+    return people
 
 
 @enable_executor_hook
