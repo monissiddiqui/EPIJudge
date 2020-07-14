@@ -3,9 +3,31 @@ from test_framework import generic_test
 
 
 def is_linked_list_a_palindrome(L: ListNode) -> bool:
-    # TODO - you fill in here.
-    return True
+    lhalf = ListNode(0)
+    slow = L
+    if not slow : return True
+    fast = slow.next
+    if not fast: return True
 
+    while fast :
+        temp = slow
+        slow = slow.next
+        lhalf.next, temp.next = temp, lhalf.next
+        if fast.next :
+            fast = fast.next
+            if not fast.next :
+                slow = slow.next
+            fast = fast.next
+        else :
+            fast = fast.next
+
+    lhalf= lhalf.next
+    while lhalf and slow :
+        if lhalf.data != slow.data :
+            return False
+        lhalf = lhalf.next
+        slow = slow.next
+    return True
 
 if __name__ == '__main__':
     exit(
