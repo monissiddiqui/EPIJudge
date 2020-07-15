@@ -3,6 +3,7 @@ import functools
 from test_framework import generic_test
 from test_framework.test_utils import enable_executor_hook
 
+from collections import deque
 
 class BinaryTreeNode:
     def __init__(self, data=None):
@@ -12,9 +13,36 @@ class BinaryTreeNode:
         self.next = None  # Populates this field.
 
 
-def construct_right_sibling(tree: BinaryTreeNode) -> None:
-    # TODO - you fill in here.
+def construct_right_sibling_extra_space(tree: BinaryTreeNode) -> None:
+    if tree is None : return None
+    bfsQ = deque([tree])
+    while bfsQ :
+        siblen = 2 *len(bfsQ)
+        prev = bfsQ.popleft()
+        isDeepest = prev.left is None
+        sibQ = deque([],maxlen=0 if isDeepest else siblen)
+        while prev :
+            if not isDeepest :
+                sibQ.append(prev.left)
+                sibQ.append(prev.right)
+            prev.next = bfsQ.popleft() if bfsQ else None
+            prev = prev.next
+        bfsQ=sibQ
     return
+
+def construct_right_sibling(tree: BinaryTreeNode) -> None:
+
+    def setNextForSiblings(node) :
+        if not (node and node.left) : return
+        while node :
+            node.left.next = node.right
+            if node.next :
+                node.right.next = node.next.left
+            node = node.next
+
+    while(tree) :
+        setNextForSiblings(tree)
+        tree = tree.left
 
 
 def traverse_next(node):
